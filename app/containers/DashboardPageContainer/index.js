@@ -44,22 +44,13 @@ class DashboardPage extends React.Component {
 
   logout() {
     localStorage.removeItem('userName');
+    localStorage.removeItem('userId');
     const url = 'https://www.spotify.com/logout/';
     const spotifyLogoutWindow = window.open(url, 'Spotify Logout', 'width=700,height=500,top=40,left=40');
     setTimeout(() => {
       spotifyLogoutWindow.close();
       this.props.history.push('/');
     }, 2000);
-
-
-    // axios.put('/api/spotify/logout')
-    //   .then(() => {
-    //     this.props.history.push('/');
-    //   })
-    //   .catch((error) => {
-    //     /* eslint no-console: ["warn", { allow: ["error"] }] */
-    //     console.error(error);
-    //   });
   }
 
   render() {
