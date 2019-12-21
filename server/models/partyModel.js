@@ -4,6 +4,7 @@ const Schema = mongoose.Schema;
 
 const PartySchema = new Schema({
   name: String,
+  id: String,
   desc: String,
   author: String,
   date: Date,

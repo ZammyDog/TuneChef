@@ -20,7 +20,7 @@ class PlaylistPage extends React.Component {
   }
 
   componentDidMount() {
-    const user = localStorage.getItem('user');
+    const user = localStorage.getItem('userName');
     if ((user === undefined) || (user == null) || (user === 'undefined')) {
       return;
     }
@@ -33,7 +33,7 @@ class PlaylistPage extends React.Component {
 
     axios.post('/api/spotify/generate', {
       id,
-      user,
+      userId: localStorage.getItem('userId'),
     })
       .then((response) => {
         if (!response.data.success) {
@@ -54,7 +54,7 @@ class PlaylistPage extends React.Component {
   }
 
   render() {
-    const user = localStorage.getItem('user');
+    const user = localStorage.getItem('userName');
     if ((user === undefined) || (user == null) || (user === 'undefined') || (this.state.ready && !this.state.id)) {
       return <Redirect to="/" />;
     }

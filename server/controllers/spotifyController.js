@@ -86,7 +86,7 @@ router.put('/joined', (req, res) => {
         .then((user) => {
           Party.findOne({ _id: req.body.id }, (err, party) => {
             if (err || !party) {
-              return res.status(200).json({ success: false, result: err });
+              return res.status(200).json({ success: false, result: err, user: '' });
             }
 
             let users = {};
@@ -139,9 +139,9 @@ router.put('/joined', (req, res) => {
                 { new: true },
                 (error, newParty) => {
                   if (error) {
-                    return res.status(200).json({ success: false, result: err });
+                    return res.status(200).json({ success: false, result: err, user: '' });
                   }
-                  return res.status(200).json({ success: true, result: newParty });
+                  return res.status(200).json({ success: true, result: newParty, user: user.body.display_name });
                 },
               );
             }
@@ -149,11 +149,11 @@ router.put('/joined', (req, res) => {
             waitForTop();
           });
         }, (err) => {
-          return res.status(200).json({ success: false, result: err });
+          return res.status(200).json({ success: false, result: err, user: '' });
         });
     },
     (err) => {
-      return res.status(200).json({ success: false, result: err });
+      return res.status(200).json({ success: false, result: err, user: '' });
     });
 });
 
@@ -443,7 +443,7 @@ router.post('/generate', (req, res) => {
         tracksList.push(user.topTracks);
         artistsList.push(user.topArtists);
       });
-      spotifyApi.createPlaylist(req.body.user, party.name, { public: true })
+      spotifyApi.createPlaylist(req.body.userId, party.name, { public: true })
         .then((data) => {
           playlistId = data.body.id;
           let tracks = [];

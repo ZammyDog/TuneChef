@@ -28,7 +28,7 @@ class PartyPage extends React.Component {
   }
 
   componentDidMount() {
-    const user = localStorage.getItem('user');
+    const user = localStorage.getItem('userName');
     if ((user === undefined) || (user == null) || (user === 'undefined')) {
       return;
     }
@@ -45,7 +45,6 @@ class PartyPage extends React.Component {
       },
     })
       .then((response) => {
-        // console.log(response);
         if (!response.data.success) {
           this.setState({ ready: true });
           return;
@@ -113,8 +112,8 @@ class PartyPage extends React.Component {
   }
 
   render() {
-    const user = localStorage.getItem('user');
-    if ((user === undefined) || (user == null) || (user === 'undefined') || (this.state.ready && !this.state.name)) {
+    const user = localStorage.getItem('userName');
+    if ((user === undefined) || (user == null) || (user === 'undefined') || (this.state.ready && this.state.author !== user)) {
       return <Redirect to="/" />;
     }
 
@@ -161,13 +160,16 @@ class PartyPage extends React.Component {
 
             <div
               className={styles.detailRow}
-              role="button"
-              tabIndex={0}
-              onClick={this.delete}
-              style={{ marginBottom: -10, cursor: 'pointer', outline: 'none' }}
+              style={{ marginBottom: -10 }}
             >
               <i className={classNames(styles.detailIcon, 'fas fa-times')} />
-              <div className={styles.detailText} style={{ textDecoration: 'underline' }}>
+              <div
+                className={styles.detailText}
+                style={{ textDecoration: 'underline', cursor: 'pointer', outline: 'none' }}
+                role="button"
+                tabIndex={0}
+                onClick={this.delete}
+              >
                 Delete Party
               </div>
             </div>
@@ -214,11 +216,12 @@ class PartyPage extends React.Component {
         </div>
         {Object.values(this.state.users).length > 0 ? Object.entries(this.state.users).map(([key, val]) => (
           <div className={styles.userContainer} key={key}>
-            {val.img ? (
+            {/* {val.img ? (
               <img src={val.img} alt={val.name} className={styles.userLogo} draggable={false} />
             ) : (
               <img src={TuneChef} alt="TuneChef Logo" className={styles.userLogo} draggable={false} />
-            )}
+            )} */}
+            <img src={TuneChef} alt="TuneChef Logo" className={styles.userLogo} draggable={false} />
             <div className={styles.userText}>
               {val.name}
             </div>

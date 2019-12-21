@@ -41,7 +41,8 @@ class HomePage extends React.Component {
           axios.get('/api/spotify/user', {
           })
             .then((res) => {
-              localStorage.setItem('user', res.data.body.display_name);
+              localStorage.setItem('userId', res.data.body.id);
+              localStorage.setItem('userName', res.data.body.display_name);
               this.props.history.push('/dashboard');
             })
             .catch((err) => {

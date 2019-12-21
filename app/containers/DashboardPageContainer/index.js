@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import classNames from 'classnames';
 import { Link, Redirect } from 'react-router-dom';
@@ -13,10 +14,12 @@ class DashboardPage extends React.Component {
     this.state = {
       parties: [],
     };
+
+    this.logout = this.logout.bind(this);
   }
 
   componentDidMount() {
-    const user = localStorage.getItem('user');
+    const user = localStorage.getItem('userName');
     if ((user === undefined) || (user == null) || (user === 'undefined')) {
       return;
     }
@@ -39,8 +42,28 @@ class DashboardPage extends React.Component {
       });
   }
 
+  logout() {
+    localStorage.removeItem('userName');
+    const url = 'https://www.spotify.com/logout/';
+    const spotifyLogoutWindow = window.open(url, 'Spotify Logout', 'width=700,height=500,top=40,left=40');
+    setTimeout(() => {
+      spotifyLogoutWindow.close();
+      this.props.history.push('/');
+    }, 2000);
+
+
+    // axios.put('/api/spotify/logout')
+    //   .then(() => {
+    //     this.props.history.push('/');
+    //   })
+    //   .catch((error) => {
+    //     /* eslint no-console: ["warn", { allow: ["error"] }] */
+    //     console.error(error);
+    //   });
+  }
+
   render() {
-    const user = localStorage.getItem('user');
+    const user = localStorage.getItem('userName');
     if ((user === undefined) || (user == null) || (user === 'undefined')) {
       return <Redirect to="/" />;
     }
@@ -49,6 +72,10 @@ class DashboardPage extends React.Component {
       <div className={arts.body}>
         <div className={arts.header}>
           Dashboard
+        </div>
+
+        <div className={styles.logoutButton} role="button" tabIndex={0} onClick={this.logout}>
+          Logout
         </div>
 
         <div className={styles.partyHolder}>
@@ -71,5 +98,9 @@ class DashboardPage extends React.Component {
     );
   }
 }
+
+DashboardPage.propTypes = {
+  history: PropTypes.object,
+};
 
 export default DashboardPage;

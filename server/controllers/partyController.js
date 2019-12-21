@@ -11,6 +11,7 @@ router.use(bodyParser.json());
 router.post('/create', (req, res) => {
   Party.create({
     name: req.body.name,
+    id: req.body.id,
     author: req.body.author,
     desc: req.body.desc,
     date: moment(),

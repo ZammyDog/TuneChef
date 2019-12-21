@@ -16,6 +16,8 @@ class ThanksPage extends React.Component {
       ready: false,
       name: '',
       author: '',
+      myParty: false,
+      id: '',
     };
   }
 
@@ -32,9 +34,12 @@ class ThanksPage extends React.Component {
           this.setState({ ready: true });
           return;
         }
+
         this.setState({
           name: response.data.result.name,
           author: response.data.result.author,
+          myParty: response.data.result.author === response.data.user,
+          id,
           ready: true,
         });
       })
@@ -66,13 +71,20 @@ class ThanksPage extends React.Component {
               {this.state.name}
             </div>
 
-            <div className={styles.ownText}>
-              {'Create your own Party at '}
-              <Link to="/" className={styles.link}>
-                TuneChef
-              </Link>
-            </div>
-
+            {this.state.myParty ? (
+              <div className={styles.ownText}>
+                <Link to={`/party/${this.state.id}`} className={styles.link}>
+                  View Your Party
+                </Link>
+              </div>
+            ) : (
+              <div className={styles.ownText}>
+                {'Create your own Party at '}
+                <Link to="/" className={styles.link}>
+                  TuneChef
+                </Link>
+              </div>
+            )}
           </div>
         ) : (
           <Loader />

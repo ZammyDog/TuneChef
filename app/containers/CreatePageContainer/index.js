@@ -39,7 +39,8 @@ class CreatePage extends React.Component {
       axios.post('/api/party/create', {
         name: this.state.name,
         desc: this.state.desc,
-        author: localStorage.getItem('user'),
+        author: localStorage.getItem('userName'),
+        id: localStorage.getItem('userId'),
       })
         .then((response) => {
           this.props.history.push(`/party/${response.data._id}`);
@@ -54,7 +55,7 @@ class CreatePage extends React.Component {
   }
 
   render() {
-    const user = localStorage.getItem('user');
+    const user = localStorage.getItem('userName');
     if ((user === undefined) || (user == null) || (user === 'undefined')) {
       return <Redirect to="/" />;
     }

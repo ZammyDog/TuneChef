@@ -1,4 +1,18 @@
-
+.logoutButton {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 24px;
+  font-weight: bold;
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
+  color: #fff;
+  transition: 200ms;
+}
+.logoutButton:hover {
+  transform: scale(.95);
+}
 
 .partyHolder {
   display: flex;
@@ -36,6 +50,7 @@
   box-shadow: rgba(0, 0, 0, 0.2) 6px 0px 8px;
   border-radius: 50%;
   width: 100px;
+  height: 100px;
   line-height: 100px;
   text-align: center;
 }
